@@ -1,0 +1,6 @@
+<launch>
+    <arg name="node_start_delay" default="2.0"/>
+    <include file="$(find turtlebot3_gazebo)/launch/turtlebot3_empty_world.launch" />
+    <node name="goal_nav" pkg="turtlebot_sim" type="two_pt_ctrl.py" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' " output="screen"/>
+    <node name="goal_gen" pkg="turtlebot_sim" type="goal_generator.py" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' " output="screen"/>
+</launch>
