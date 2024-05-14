@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+    <!--<include file="$(find gazebo_ros)/launch/empty_world.launch"/>-->
+    <param name="robot_description" command="xacro '$(find bot_with_camera)/urdf/turtlebot_with_cam.urdf.xacro'"/>
+    <arg name="rviz_config_file" default="$(find bot_with_camera)/config/bot_with_cam.rviz"/>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+    <node name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"/>
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_config_file)"/>
+</launch>
+
