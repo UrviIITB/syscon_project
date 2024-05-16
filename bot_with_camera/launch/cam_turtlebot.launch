@@ -19,10 +19,7 @@
     <arg name="debug" value="$(arg debug)"/>
   </include>
 
-  <arg name="turtlebot" default="AD01"/>
-  <arg name="tf_prefix" default="wtf"/>
-
-  <arg name="l_id" default="rrb.dae"/>
+  <arg name="robot_name" default="turtlebot"/>
 
   <arg name="x" default="-1"/>
   <arg name="y" default="0"/>
@@ -30,8 +27,8 @@
 
   <param name="robot_description" command="$(find xacro)/xacro '$(find bot_with_camera)/urdf/turtlebot_with_cam.urdf.xacro'"/>
   
-  <node name="leader" pkg="gazebo_ros" type="spawn_model"
-        args="-x $(arg x) -y $(arg y) -z $(arg z) -urdf -param robot_description -model $(arg turtlebot)"/>
+  <node name="bot_with_cam" pkg="gazebo_ros" type="spawn_model"
+        args="-x $(arg x) -y $(arg y) -z $(arg z) -urdf -param robot_description -model $(arg robot_name)"/>
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
 
 </launch>
