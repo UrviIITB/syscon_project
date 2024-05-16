@@ -41,7 +41,7 @@
     </collision>
 </link>
 <joint name="joint_name" type="fixed">
-    <parent link="base_link"/>
+    <parent link="base_footprint"/>
     <child link="camera_link"/>
     <origin xyz="0.03 0.0 ${bot_height}" rpy="0.0 0.0 0.0"/>
 </joint>
