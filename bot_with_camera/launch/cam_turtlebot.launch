@@ -24,11 +24,12 @@
   <arg name="x" default="-1"/>
   <arg name="y" default="0"/>
   <arg name="z" default="0"/>
+  <arg name="yaw" default="1.57"/>
 
-  <param name="robot_description" command="$(find xacro)/xacro '$(find bot_with_camera)/urdf/turtlebot_with_cam.urdf.xacro'"/>
+  <param name="robot_description" command="$(find xacro)/xacro $(find bot_with_camera)/urdf/turtlebot_with_cam.urdf.xacro"/>
   
   <node name="bot_with_cam" pkg="gazebo_ros" type="spawn_model"
-        args="-x $(arg x) -y $(arg y) -z $(arg z) -urdf -param robot_description -model $(arg robot_name)"/>
+        args="-x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg yaw) -urdf -param robot_description -model $(arg robot_name)"/>
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
 
 </launch>
