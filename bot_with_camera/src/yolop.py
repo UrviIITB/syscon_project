@@ -16,7 +16,8 @@ import torchvision.transforms as transforms
 
 model = torch.hub.load('hustvl/yolop', 'yolop', pretrained=True)  # loading from repo ,loading from local device not working
 
-img_path = '/home/ros/workspace/src/syscon_project/bot_with_camera/src/test_img.jpg'  # path to test image
+im_name = 'test_img.jpg'
+img_path = '/home/ros/workspace/src/syscon_project/bot_with_camera/src/' + im_name  # path to test image
 
 transform = transforms.Compose([
     transforms.ToPILImage(),  # converting to a PIL image
@@ -38,7 +39,7 @@ da_np = da.squeeze().detach().numpy() #squeezing to remove extra dimensions and 
 da_np = da_np[0] # removing batch dimension
 original_size = (img.shape[1], img.shape[0])  # width, height
 da_resized = cv2.resize(da_np, original_size, interpolation=cv2.INTER_LINEAR) # resizing to original image size
-_, da_binary = cv2.threshold(da_resized, 0.7, 1.0, cv2.THRESH_BINARY)
+_, da_binary = cv2.threshold(da_resized, 0.5, 1.0, cv2.THRESH_BINARY)
 res = np.zeros_like(img)
 res[da_binary ==0] = [0, 255, 0] 
 alpha = 0.3 # transparency level
@@ -47,7 +48,7 @@ alpha = 0.3 # transparency level
 ll_np = ll.squeeze().detach().numpy()
 ll_np = ll_np[0]
 ll_resized = cv2.resize(ll_np, original_size, interpolation=cv2.INTER_LINEAR)
-_, ll_binary = cv2.threshold(ll_resized, 0.45, 1.0, cv2.THRESH_BINARY)
+_, ll_binary = cv2.threshold(ll_resized, 0.5, 1.0, cv2.THRESH_BINARY)
 res[ll_binary ==0] = [0, 0, 255]
 annotated_image = cv2.addWeighted(img, 1, res, alpha, 0)  # blending the two images
 
@@ -57,7 +58,7 @@ for detection in det[0][0]:  # detections for the first image (one image current
     confidence = detection[4].item()  # Extracting confidence score
     class_label = int(detection[5].item())  # Extracting class label
     
-    if confidence > 0.5:
+    if confidence > 0.8:
         x, y, width, height = bbox.astype(int)
         x_min = int(x - width / 2) # x_min, y_min are top left coordinates 
         y_min = int(y - height / 2)
@@ -70,7 +71,8 @@ for detection in det[0][0]:  # detections for the first image (one image current
         cv2.rectangle(annotated_image, (x_min_orig, y_min_orig), (x_max_orig, y_max_orig), (255, 0, 0), 2) # drawing bounding box
         cv2.putText(annotated_image, f'Class: {class_label}, Confidence: {confidence:.2f}', (x_min_orig, y_min_orig - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
 
-
-cv2.imwrite('/home/ros/workspace/src/syscon_project/bot_with_camera/src/output.jpg', annotated_image)
+path = '/home/ros/workspace/src/syscon_project/bot_with_camera/src/'+ 'test_img_annotated.jpg'
+print(path)
+cv2.imwrite(path, annotated_image)
 print("saved result")
 cv2.destroyAllWindows()

@@ -2,8 +2,13 @@ import rospy
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 import cv2
-import torchvision.transforms as transforms
 import datetime
+import os
+import time
+
+img_dir = "./raw_imgs/"
+if not os.path.exists(img_dir):
+    os.makedirs(img_dir)
 
 class ConvertImage:
     def __init__(self):
@@ -15,13 +20,15 @@ class ConvertImage:
             cv_image = self.bridge.imgmsg_to_cv2(req, "bgr8")
         except CvBridgeError as e:
             print(e)
-        img_name = "./"+datetime.datetime.now().strftime("%Y%m%d%H%M%S")+".jpg"
-        cv2.imwrite(img_name, cv_image)
-        print("saved image")
+        img_name = datetime.datetime.now().strftime("%d%H%M%S")+".jpg"
+        img_path = img_dir + img_name
+        cv2.imwrite(img_path, cv_image)
+        print("saved image ", img_name)
+        time.sleep(1)
 
 def main():
     rospy.init_node("ros_to_cv")
-    yolop = ConvertImage()
+    ros_ro_cv = ConvertImage()
     try:
         rospy.spin()
     except KeyboardInterrupt:

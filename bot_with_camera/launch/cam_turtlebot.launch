@@ -11,7 +11,7 @@
   
   
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_world.world"/>
+    <!--<arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_world.world"/>-->
     <arg name="paused" value="$(arg paused)"/>
     <arg name="use_sim_time" value="$(arg use_sim_time)"/>
     <arg name="gui" value="$(arg gui)"/>
@@ -21,10 +21,10 @@
 
   <arg name="robot_name" default="turtlebot"/>
 
-  <arg name="x" default="0"/>
+  <arg name="x" default="-2"/>
   <arg name="y" default="0"/>
   <arg name="z" default="0"/>
-  <arg name="yaw" default="0"/>
+  <arg name="yaw" default="1.57"/>
 
   <param name="robot_description" command="$(find xacro)/xacro $(find bot_with_camera)/urdf/turtlebot_with_cam.urdf.xacro"/>
   
