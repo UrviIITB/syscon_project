@@ -4,7 +4,9 @@ from mpl_toolkits.mplot3d import Axes3D
 import cv2
 import transformation
 
-seg_mask = "/home/ros/workspace/src/syscon_project/bot_with_camera/src/manual/masks/7.png"
+name = "1"
+
+seg_mask = "/home/ros/workspace/src/syscon_project/bot_with_camera/src/manual/masks/{}.png".format(name)
 plot_path = "/home/ros/workspace/src/syscon_project/bot_with_camera/src/manual/plots/"
 
 mask = cv2.imread(seg_mask, cv2.IMREAD_GRAYSCALE)
@@ -19,14 +21,17 @@ x = np.array([coord[0] for coord in points])
 y = np.array([coord[1] for coord in points])
 z = [0 for coord in points]
 
-#3D PLOT
+# #3D PLOT
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 ax.scatter(x, y, z)
 ax.set_xlabel('X')
 ax.set_ylabel('Y')
 ax.set_zlabel('Z')
-plt.savefig(plot_path+"3d_plots/" + "7.png")
+ax.set_xlim(-1.2,1.2)
+ax.set_ylim(0.1,1.4)
+ax.set_zlim(-0.4,0.4)
+plt.savefig(plot_path+"3d_plots/" + "{}.png".format(name))
 
 #2D PLOT (TOP VIEW SHOWING DISTANCE FROM BOT)
 distances = np.sqrt(x**2 + y**2)
@@ -34,8 +39,10 @@ norm_distances = (distances - distances.min()) / (distances.max() - distances.mi
 plt.figure(figsize=(8, 6))
 scatter = plt.scatter(x, y, c=norm_distances, cmap='viridis', marker='o')
 colorbar = plt.colorbar(scatter)
-colorbar.set_label('Distance from bot')
+colorbar.set_label('Normalized Distance from bot')
 plt.xlabel('X')
 plt.ylabel('Y')
 plt.title('2D Plot')
-plt.savefig(plot_path+"2d_plots/" + "7.png")
+plt.xlim(-1.2,1.2)
+plt.ylim(0.1,1.4)
+plt.savefig(plot_path+"2d_plots/" + "{}.png".format(name))
