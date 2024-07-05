@@ -1,0 +1,112 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="indoor_world">
+
+    <!-- Include the necessary plugins -->
+    <!--
+    <plugin name="gazebo_ros" filename="libgazebo_ros_api_plugin.so"/>
+    -->
+
+    <!-- Define the ground plane with a grass texture -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1.0</mu>
+                <mu2>1.0</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/White</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Define the light source -->
+    <light name="sun" type="directional">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.5 -1</direction>
+    </light>
+    
+    <!-- Include models -->
+    <include>
+      <uri>model://person_standing</uri>
+      <pose>-3 2 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://construction_barrel</uri>
+      <pose>-6 6 0 0 0 0</pose>
+      <name>barrel1</name>
+    </include>
+
+    <include>
+      <uri>model://cardboard_box</uri>
+      <pose>-0.5 3 0 0 0 0</pose>
+      <name>box1</name>
+    </include>
+
+    <include>
+      <uri>model://cardboard_box</uri>
+      <pose>-2.5 4 0 0 0 0</pose>
+      <name>box2</name>
+    </include>
+
+    <include>
+      <uri>model://cardboard_box</uri>
+      <pose>-4.5 5 0 0 0 0</pose>
+      <name>box3</name>
+    </include>
+
+    <include>
+      <uri>model://construction_barrel</uri>
+      <pose>-2 2 0 0 0 0</pose>
+      <name>barrel2</name>
+    </include>
+
+    <include>
+      <uri>model://jersey_barrier</uri>
+      <pose>-6 2 0 0 0 1.57</pose>
+      <name>barrier1</name>
+    </include>
+
+    <include>
+      <uri>model://jersey_barrier</uri>
+      <pose>-3 6 0 0 0 0</pose>
+      <name>barrier2</name>
+    </include>
+    
+
+  </world>
+</sdf>
